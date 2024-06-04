@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Actor;
+
 import com.example.demo.model.Film;
 import com.example.demo.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
