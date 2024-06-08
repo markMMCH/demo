@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ActorRepository {
     List<Actor> getActors();
+    List<Actor> getActorsWithPagination(int start, int limit);
     Actor addActor(Actor actor);
     Optional<Actor> getActorById(String id);
     Actor updateActor(String id, Actor actor);

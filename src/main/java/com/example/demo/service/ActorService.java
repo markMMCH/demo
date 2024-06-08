@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface ActorService {
      List<Actor> getActors();
+     List<Actor> getActorsWithPagination(int start, int limit);
      Optional<Actor> getActorById(String id);
      Actor addActor(Actor actor);
      Actor updateActor(String id, Actor actor);
      void deleteActor(String id);
-
 }

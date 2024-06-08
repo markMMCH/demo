@@ -20,6 +20,11 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
+    public List<Actor> getActorsWithPagination(int start, int limit) {
+        return actorRepository.getActorsWithPagination(start, limit);
+    }
+
+    @Override
     public Optional<Actor> getActorById(String id) {
         return actorRepository.getActorById(id);
     }

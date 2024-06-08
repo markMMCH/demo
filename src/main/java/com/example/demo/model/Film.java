@@ -1,16 +1,25 @@
 package com.example.demo.model;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document(collection = "films")
 public class Film {
+    @Id
+    private ObjectId id;
     private String title;
     private List<String> genre;
-    private String director;
+    @DBRef
+    private Director director;
     private Integer year;
-    private List<String> actors;
+    @DBRef
+    private List<Actor> actors;
+
+
 
     public String getTitle() {
         return title;
@@ -28,11 +37,11 @@ public class Film {
         this.genre = genre;
     }
 
-    public String getDirector() {
+    public Director getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
+    public void setDirector(Director director) {
         this.director = director;
     }
 
@@ -44,11 +53,11 @@ public class Film {
         this.year = year;
     }
 
-    public List<String> getActors() {
+    public List<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(List<String> actors) {
+    public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
 }
