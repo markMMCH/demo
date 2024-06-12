@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Actor;
 import com.example.demo.service.ActorService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ActorController {
     @GetMapping("/{id}")
     public ResponseEntity<Actor> getActorById(@PathVariable String id) {
         try {
-            Optional<Actor> actor = actorService.getActorById(id);
+            Optional<Actor> actor = actorService.getActorById(new ObjectId(id));
             return actor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         } catch (RecordNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -44,9 +45,9 @@ public class ActorController {
     @PutMapping("/{id}")
     public ResponseEntity<Actor> updateActor(@PathVariable String id, @RequestBody Actor actorDetails) {
         try {
-            Optional<Actor> actor = actorService.getActorById(id);
+            Optional<Actor> actor = actorService.getActorById(new ObjectId(id));
             if (actor.isPresent()) {
-                Actor updatedActor = actorService.updateActor(id, actorDetails);
+                Actor updatedActor = actorService.updateActor(new ObjectId(id), actorDetails);
                 return ResponseEntity.ok(updatedActor);
             } else {
                 throw new RecordNotFoundException("Actor with ID " + id + " not found.");
@@ -60,8 +61,8 @@ public class ActorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteActor(@PathVariable String id) {
         try {
-            if (actorService.getActorById(id).isPresent()) {
-                actorService.deleteActor(id);
+            if (actorService.getActorById(new ObjectId(id)).isPresent()) {
+                actorService.deleteActor(new ObjectId(id));
                 return ResponseEntity.noContent().build();
             } else {
                 throw new RecordNotFoundException("Actor with ID " + id + " not found.");

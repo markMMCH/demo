@@ -20,7 +20,7 @@ public class Actor {
     private String name;
     private int age;
     private String country;
-    public Actor() {}
+
 
     public ObjectId getId() {
         return id;

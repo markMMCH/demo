@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.ActorRepository;
+import com.example.demo.dao.DirectorRepository;
 import com.example.demo.dao.FilmRepository;
 import com.example.demo.model.Actor;
 import com.example.demo.model.Director;
 import com.example.demo.model.Film;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,9 @@ public class FilmServiceImpl implements FilmService {
     @Autowired
     FilmRepository filmRepository;
     @Autowired
-    ActorService actorService;
+    ActorRepository actorRepository;
     @Autowired
-    DirectorService directorService;
+    DirectorRepository directorRepository;
 
     @Override
     public Film addFilm(Film film) {
@@ -27,29 +29,29 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Optional<Film> getFilmById(String id) {
-        return filmRepository.getFilmById(id);
+    public Optional<Film> getFilmById(ObjectId id, String includeFields, String excludeFields) {
+        return filmRepository.getFilmById(id, includeFields, excludeFields);
     }
 
     @Override
-    public Film updateFilm(String id, Film film) {
+    public Film updateFilm(ObjectId id, Film film) {
         return filmRepository.updateFilm(id, film);
     }
 
     @Override
-    public void deleteFilm(String id) {
+    public void deleteFilm(ObjectId id) {
         filmRepository.deleteFilm(id);
     }
 
     @Override
-    public List<Film> getAllFilmsByActor(String id) {
-        Optional<Actor> actor = actorService.getActorById(id);
+    public List<Film> getAllFilmsByActor(ObjectId id) {
+        Optional<Actor> actor = actorRepository.getActorById(id);
         return filmRepository.getAllFilmsByActor(actor.get());
     }
 
     @Override
-    public List<Film> getAllFilmsByDirector(String id) {
-        Optional<Director> director = directorService.getDirectorById(id);
+    public List<Film> getAllFilmsByDirector(ObjectId id) {
+        Optional<Director> director = directorRepository.getDirectorById(id);
         return filmRepository.getAllFilmsByDirector(director.get());
     }
 

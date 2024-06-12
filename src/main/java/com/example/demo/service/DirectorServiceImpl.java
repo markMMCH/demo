@@ -1,6 +1,7 @@
 package com.example.demo.service;
 import com.example.demo.dao.DirectorRepository;
 import com.example.demo.model.Director;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class DirectorServiceImpl implements DirectorService {
     private DirectorRepository directorRepository;
 
     @Override
-    public Optional<Director> getDirectorById(String id) {
+    public Optional<Director> getDirectorById(ObjectId id) {
         return directorRepository.getDirectorById(id);
     }
 
@@ -23,12 +24,12 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public Director updateDirector(String id, Director director) {
+    public Director updateDirector(ObjectId id, Director director) {
         return directorRepository.updateDirector(id, director);
     }
 
     @Override
-    public void deleteDirector(String id) {
+    public void deleteDirector(ObjectId id) {
         directorRepository.deleteDirector(id);
     }
 }

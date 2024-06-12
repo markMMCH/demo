@@ -26,14 +26,14 @@ public class DirectorRepositoryImpl implements DirectorRepository {
     }
 
     @Override
-    public Optional<Director> getDirectorById(String id) {
-        return Optional.ofNullable(mongoTemplate.findOne(new Query().addCriteria(Criteria.where("id").is(new ObjectId(id))), Director.class));
+    public Optional<Director> getDirectorById(ObjectId id) {
+        return Optional.ofNullable(mongoTemplate.findOne(new Query().addCriteria(Criteria.where("id").is(id)), Director.class));
     }
 
     @Override
-    public Director updateDirector(String id, Director director) {
+    public Director updateDirector(ObjectId id, Director director) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+        query.addCriteria(Criteria.where("_id").is(id));
         Update update = new Update();
         Field[] fields = Director.class.getDeclaredFields();
         for (Field field : fields) {
@@ -55,9 +55,9 @@ public class DirectorRepositoryImpl implements DirectorRepository {
     }
 
     @Override
-    public void deleteDirector(String id) {
+    public void deleteDirector(ObjectId id) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+        query.addCriteria(Criteria.where("_id").is(id));
         mongoTemplate.remove(query, Director.class);
     }
 }

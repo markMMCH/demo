@@ -22,10 +22,10 @@ public class ActorRepositoryImpl implements ActorRepository {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Optional<Actor> getActorById(String id) {
+    public Optional<Actor> getActorById(ObjectId id) {
         try {
             Query query = new Query();
-            query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+            query.addCriteria(Criteria.where("_id").is(id));
             Actor actor = mongoTemplate.findOne(query, Actor.class);
             return Optional.ofNullable(actor);
         } catch (Exception e) {
@@ -43,10 +43,10 @@ public class ActorRepositoryImpl implements ActorRepository {
     }
 
     @Override
-    public void deleteActor(String id) {
+    public void deleteActor(ObjectId id) {
         try {
             Query query = new Query();
-            query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+            query.addCriteria(Criteria.where("_id").is(id));
             mongoTemplate.remove(query, Actor.class);
         } catch (Exception e) {
             throw new DatabaseOperationException("Error deleting actor with ID " + id, e);
@@ -75,10 +75,10 @@ public class ActorRepositoryImpl implements ActorRepository {
     }
 
     @Override
-    public Actor updateActor(String id, Actor actor) {
+    public Actor updateActor(ObjectId id, Actor actor) {
         try {
             Query query = new Query();
-            query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+            query.addCriteria(Criteria.where("_id").is(id));
             Update update = new Update();
             Field[] fields = Actor.class.getDeclaredFields();
             for (Field field : fields) {

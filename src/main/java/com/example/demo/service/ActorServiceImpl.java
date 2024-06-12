@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.ActorRepository;
 import com.example.demo.model.Actor;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Optional<Actor> getActorById(String id) {
+    public Optional<Actor> getActorById(ObjectId id) {
         return actorRepository.getActorById(id);
     }
 
@@ -35,12 +36,12 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Actor updateActor(String id, Actor actor) {
+    public Actor updateActor(ObjectId id, Actor actor) {
         return actorRepository.updateActor(id, actor);
     }
 
     @Override
-    public void deleteActor(String id) {
+    public void deleteActor(ObjectId id) {
         actorRepository.deleteActor(id);
     }
 }

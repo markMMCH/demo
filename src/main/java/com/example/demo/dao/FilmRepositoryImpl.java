@@ -7,20 +7,26 @@ import com.mongodb.DBRef;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Repository
 public class FilmRepositoryImpl implements FilmRepository {
 
     @Autowired
-    private MongoTemplate  mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
     @Override
     public Film addFilm(Film film) {
@@ -28,17 +34,29 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
     @Override
-    public Optional<Film> getFilmById(String id) {
+    public Optional<Film> getFilmById(ObjectId id, String includeFields, String excludeFields) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+        query.addCriteria(Criteria.where("_id").is(id));
+        if (includeFields != null && !includeFields.isEmpty()) {
+            List<String> incFields = Arrays.stream(includeFields.split(",")).toList();
+            for (String field : incFields) {
+                query.fields().include(field);
+            }
+        }
+        if (excludeFields != null && !excludeFields.isEmpty()) {
+            List<String> excFields = Arrays.stream(excludeFields.split(",")).toList();
+            for (String field : excFields) {
+                query.fields().exclude(field);
+            }
+        }
         Film film = mongoTemplate.findOne(query, Film.class);
         return Optional.ofNullable(film);
     }
 
     @Override
-    public Film updateFilm(String id, Film film) {
+    public Film updateFilm(ObjectId id, Film film) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+        query.addCriteria(Criteria.where("_id").is(id));
         Update update = new Update();
         Field[] fields = Film.class.getDeclaredFields();
         for (Field field : fields) {
@@ -70,9 +88,9 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
     @Override
-    public void deleteFilm(String id) {
+    public void deleteFilm(ObjectId id) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
+        query.addCriteria(Criteria.where("_id").is(id));
         mongoTemplate.remove(query, Film.class);
     }
 

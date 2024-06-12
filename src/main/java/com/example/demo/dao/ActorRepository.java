@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Actor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface ActorRepository {
     List<Actor> getActors();
     List<Actor> getActorsWithPagination(int start, int limit);
     Actor addActor(Actor actor);
-    Optional<Actor> getActorById(String id);
-    Actor updateActor(String id, Actor actor);
-    void deleteActor(String id);
+    Optional<Actor> getActorById(ObjectId id);
+    Actor updateActor(ObjectId id, Actor actor);
+    void deleteActor(ObjectId id);
 }
