@@ -44,15 +44,15 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<Film> getAllFilmsByActor(ObjectId id) {
+    public List<Film> getAllByActor(ObjectId id) {
         Optional<Actor> actor = actorRepository.getActorById(id);
-        return filmRepository.getAllFilmsByActor(actor.get());
+        return filmRepository.getAllByActor(actor.get());
     }
 
     @Override
-    public List<Film> getAllFilmsByDirector(ObjectId id) {
+    public List<Film> getAllByDirector(ObjectId id) {
         Optional<Director> director = directorRepository.getDirectorById(id);
-        return filmRepository.getAllFilmsByDirector(director.get());
+        return filmRepository.getAllByDirector(director.get());
     }
 
 

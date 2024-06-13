@@ -15,6 +15,6 @@ public interface FilmRepository {
     Optional<Film> getFilmById(ObjectId id, String includeFields, String excludeFields);
     Film updateFilm(ObjectId id, Film film);
     void deleteFilm(ObjectId id);
-    List<Film> getAllFilmsByActor(Actor actor);
-    List<Film> getAllFilmsByDirector(Director director);
+    List<Film> getAllByActor(Actor actor);
+    List<Film> getAllByDirector(Director director);
 }

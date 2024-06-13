@@ -39,7 +39,7 @@ public class ActorController {
     public List<Actor> getActors(
             @RequestParam(name = "start", required = false, defaultValue = "0") int start,
             @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
-        return actorService.getActorsWithPagination(start, limit);
+        return actorService.getActors(start, limit);
     }
 
     @PutMapping("/{id}")

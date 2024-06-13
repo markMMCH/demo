@@ -95,14 +95,14 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
     @Override
-    public List<Film> getAllFilmsByActor(Actor actor) {
+    public List<Film> getAllByActor(Actor actor) {
         Query query = new Query();
         query.addCriteria(Criteria.where("actors").is(new DBRef("actors", actor.getId())));
         return mongoTemplate.find(query, Film.class);
     }
 
     @Override
-    public List<Film> getAllFilmsByDirector(Director director) {
+    public List<Film> getAllByDirector(Director director) {
         Query query = new Query();
         query.addCriteria(Criteria.where("director").is(new DBRef("directors", director.getId())));
         return mongoTemplate.find(query, Film.class);

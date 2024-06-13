@@ -64,7 +64,7 @@ public class ActorRepositoryImpl implements ActorRepository {
     }
 
     @Override
-    public List<Actor> getActorsWithPagination(int start, int limit) {
+    public List<Actor> getActors(int start, int limit) {
         try {
             Query query = new Query().skip(start).limit(limit);
             return mongoTemplate.find(query, Actor.class);

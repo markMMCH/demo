@@ -12,6 +12,6 @@ public interface FilmService {
     Optional<Film> getFilmById(ObjectId id, String includeFields, String excludeFields);
     Film updateFilm(ObjectId id, Film film);
     void deleteFilm(ObjectId id);
-    List<Film> getAllFilmsByActor(ObjectId id);
-    List<Film> getAllFilmsByDirector(ObjectId id);
+    List<Film> getAllByActor(ObjectId id);
+    List<Film> getAllByDirector(ObjectId id);
 }
